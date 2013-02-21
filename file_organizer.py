@@ -4,18 +4,12 @@
 import os
 import tarfile
 
-def extract(tar_url, extract_path='.'):
-     print tar_url
-     tar = tarfile.open(tar_url, 'r')
-     for item in tar:
-         tar.extract(item, extract_path)
-         if item.name.find(".tgz") != -1 or item.name.find(".tar") != -1:
-             extract(item.name, "./" + item.name[:item.name.rfind('/')])
-
-
 cwd = os.getcwd()
+csd = '/Users/xiaoyu/Documents/parkinson_data/MJFF-Data/'
+ctd = '/Users/xiaoyu/Documents/parkinson_data/processing/'
 print 'Current working directory: ' + cwd
-folder_path = '/Users/xiaoyu/Documents/parkinson_data/MJFF-Data/'
+print 'Current source directory: ' + csd
+print 'Current target directory: ' + ctd
 files_full = os.listdir(folder_path)
 for f in files_full:
 	if len(f) > 9:
