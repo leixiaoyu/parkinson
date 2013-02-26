@@ -27,7 +27,7 @@ def ExtractFiles(src_folder, tgt_folder):
 			if not os.path.isdir(target_folder):
 				os.makedirs(target_folder)
 			tar = tarfile.open(src_folder + f)
-			tar.extractall(target_folder + '/' + os.path.basename(f))
+			tar.extractall(target_folder)
 
 def CleanDir(directory):
 	walker = os.walk(directory)
@@ -38,26 +38,29 @@ def CleanDir(directory):
 			except shutil.Error:
 				continue
 
-def Mergy(keyword,tarf):
-	files_full = os.listdir(tarf)
-	if not os.path.isdir(tarf):
-		os.makedirs(tarf)
-	os.chdir(csd)
-	fout=open(keyword +'.csv','a+')	
-	t=1   #flag	
+def Mergy(keyword,tgt_f):
+	files_full = os.listdir(tgt_f)
+	os.chdir(tgt_f)
+	fout=open(keyword + '.csv','a+')	
+	t = 1   # flag	
 	for f in files_full:
-		if len(f) > 9:			
-			if str(keyword) == f.split('_')[1]:
-				if t==1:     # first file:
-					lines=open(f,'r')
-					t=2
+		f_path = tgt_f + f
+		if os.path.splitext(f_path)[0] == keyword:
+			os.remove(f_path)
+		elif os.path.splitext(f_path)[1] == '.csv':
+			print f_path
+			if keyword == f.split('_')[1]:
+				print f_path
+				if t == 1:     # first file:
+					lines = open(f_path,'r')
+					t = 2
 					for line in lines:
 						fout.write(line)
 				else:       # others						
-					lines=open(f,'r')
+					lines = open(f_path,'r')
 					lines.next()
 					for line in lines:
-						fout.write(line)					
+						fout.write(line)
 	fout.close()
 	
 def AverageCalculator(data_file):
@@ -71,12 +74,19 @@ def AverageCalculator(data_file):
 #candidate_list = os.listdir(ctd)
 #for c in candidate_list:
 #	CleanDir(ctd + c)
+
+
+
+
 data_folders = os.listdir(ctd)
 data_types = [ 'accel', 'audio', 'batt', 'cmpss', 'gps', 'meta' ]
 for df in data_folders:
-	tgt_folder = ctd + df
-	for dt in data_types:
-		Mergy(dt,tgt_folder)
+	if df == 'APPLE':
+		tgt_folder = ctd + df + '/'
+		print tgt_folder
+		for dt in data_types:
+			print dt
+			Mergy(dt,tgt_folder)
 
 # calculate average value
 
