@@ -71,12 +71,14 @@ def AverageCalculator(data_file):
 #candidate_list = os.listdir(ctd)
 #for c in candidate_list:
 #	CleanDir(ctd + c)
-# Mergy('accel',csd)
+data_folders = os.listdir(ctd)
+data_types = [ 'accel', 'audio', 'batt', 'cmpss', 'gps', 'meta' ]
+for df in data_folders:
+	tgt_folder = ctd + df
+	for dt in data_types:
+		Mergy(dt,tgt_folder)
 
 # calculate average value
-
-
-
 
 print 'DONE'
 		
