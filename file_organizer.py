@@ -8,12 +8,13 @@ import tarfile
 # define working path and resources
 
 cwd = os.getcwd()
-csd = 'I:/csv/'
-ctd = 'H:/data challenge/APPLE/MergedFiles/'
+csd = '/Users/xiaoyu/Documents/parkinson_data/MJFF-Data/'
+ctd = '/Users/xiaoyu/Documents/parkinson_data/processing/'
+# csd = 'I:/csv/'
+# ctd = 'H:/data challenge/APPLE/MergedFiles/'
 print 'Current working directory: ' + cwd
 print 'Current source directory: ' + csd
 print 'Current target directory: ' + ctd
-
 
 # define working methods
 
@@ -36,6 +37,7 @@ def CleanDir(directory):
 				shutil.move(data[0] + '/' + files, directory)
 			except shutil.Error:
 				continue
+
 def Mergy(keyword,tarf):
 	files_full = os.listdir(tarf)
 	if not os.path.isdir(tarf):
@@ -58,12 +60,23 @@ def Mergy(keyword,tarf):
 						fout.write(line)					
 	fout.close()
 	
+def AverageCalculator(data_file):
+	input_data = open(data_file, 'r')
+	lineTemp = []
+	
+
 # execution
 
 #ExtractFiles(csd,ctd)
 #candidate_list = os.listdir(ctd)
 #for c in candidate_list:
 #	CleanDir(ctd + c)
-Mergy('accel',csd)
+# Mergy('accel',csd)
+
+# calculate average value
+
+
+
+
 print 'DONE'
 		
