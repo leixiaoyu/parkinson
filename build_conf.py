@@ -8,6 +8,7 @@ config.set('Pathes', 'tar', '/Users/xiaoyu/Documents/parkinson_data/MJFF-Data/')
 config.set('Pathes', 'unzip', '/Users/xiaoyu/Documents/parkinson_data/processing/')
 config.set('Pathes', 'csv', '/Users/xiaoyu/Documents/parkinson_data/csvs/')
 config.set('Pathes', 'merged', '/Users/xiaoyu/Documents/parkinson_data/merged/')
+config.set('Pathes', 'log', '/Users/xiaoyu/Documents/parkinson_data/logs/')
 
 with open('localconfig.conf', 'wb') as configfile:
 	config.write(configfile)
