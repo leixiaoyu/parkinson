@@ -15,8 +15,6 @@ tar_dir = config.get('Pathes', 'tar')
 unzip_dir = config.get('Pathes', 'unzip')
 csv_dir = config.get('Pathes', 'csv')
 merged_dir = config.get('Pathes', 'merged')
-# csd = 'I:/csv/'
-# ctd = 'H:/data challenge/APPLE/MergedFiles/'
 
 keywords = [ 'accel', 'audio', 'batt', 'cmpss', 'gps' ]
 
@@ -80,7 +78,6 @@ def Trivial_Fixer(can, can_wrg, keyword, src_dir, tgt_dir):
 		f_out.write(line)
 	f_app.close()
 	f_out.close()
-
 
 # ExtractFiles(tar_dir, unzip_dir)
 # CleanDir(unzip_dir, csv_dir)
