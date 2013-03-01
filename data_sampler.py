@@ -17,11 +17,13 @@ def File_Len(fname):
 			pass
 	return i + 1
 
-def Sampler(candidate, keyword, src_dir, tgt_dir):
+def Sampler(candidate, keyword, src_dir, tgt_dir, size):
 	src_file = src_dir + candidate + '_' + keyword + '.csv'
 	length = File_Len(src_file)
 	used_num = [ 0 ]
-	for i in range(100):
+	if size > length:
+		size = length - 1
+	for i in range(size):
 		ran = random.randint(1, length)
 		while ran in used_num:
 			ran = random.randint(1, length)
@@ -40,7 +42,7 @@ print keywords
 
 for c in candidates:
 	for kw in keywords:
-		Sampler(c, kw, merged_dir, sample_dir)
+		Sampler(c, kw, merged_dir, sample_dir, 100)
 
 print 'DONE'
 
