@@ -81,6 +81,7 @@ def Trivial_Fixer(can, can_wrg, keyword, src_dir, tgt_dir):
 	f_app.close()
 	f_out.close()
 
+
 # ExtractFiles(tar_dir, unzip_dir)
 # CleanDir(unzip_dir, csv_dir)
 
