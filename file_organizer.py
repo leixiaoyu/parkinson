@@ -1,17 +1,20 @@
 # data file organizer
 # written in python
 
+import ConfigParser
 import shutil
 import os
 import tarfile
 
 # define working path and resources
 
-root_dir = '/Users/xiaoyu/Documents/parkinson_data/'
-tar_dir = '/Users/xiaoyu/Documents/parkinson_data/MJFF-Data/'
-unzip_dir = '/Users/xiaoyu/Documents/parkinson_data/processing/'
-csv_dir = '/Users/xiaoyu/Documents/parkinson_data/csvs/'
-merged_dir = '/Users/xiaoyu/Documents/parkinson_data/merged/'
+config = ConfigParser.RawConfigParser()
+config.read('localconfig.conf')
+root_dir = config.get('Pathes', 'root')
+tar_dir = config.get('Pathes', 'tar')
+unzip_dir = config.get('Pathes', 'unzip')
+csv_dir = config.get('Pathes', 'csv')
+merged_dir = config.get('Pathes', 'merged')
 # csd = 'I:/csv/'
 # ctd = 'H:/data challenge/APPLE/MergedFiles/'
 
