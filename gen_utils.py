@@ -23,8 +23,6 @@ def Is_Same_Minute(dt1, dt2):
 	for ch in chs:
 		dt1 = dt1.replace(ch, '')
 		dt2 = dt2.replace(ch, '')
-	print dt1[:12]
-	print dt1[:13]
 	if dt1[:12] == dt2[:12]:
 		return True
 	else:
