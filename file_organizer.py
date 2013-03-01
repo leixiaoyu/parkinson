@@ -7,14 +7,15 @@ import tarfile
 
 # define working path and resources
 
-cwd = os.getcwd()
-csd = '/Users/xiaoyu/Documents/parkinson_data/MJFF-Data/'
-ctd = '/Users/xiaoyu/Documents/parkinson_data/processing/'
+root_dir = '/Users/xiaoyu/Documents/parkinson_data/'
+tar_dir = '/Users/xiaoyu/Documents/parkinson_data/MJFF-Data/'
+unzip_dir = '/Users/xiaoyu/Documents/parkinson_data/processing/'
+csv_dir = '/Users/xiaoyu/Documents/parkinson_data/csvs/'
+merged_dir = '/Users/xiaoyu/Documents/parkinson_data/merged/'
 # csd = 'I:/csv/'
 # ctd = 'H:/data challenge/APPLE/MergedFiles/'
-print 'Current working directory: ' + cwd
-print 'Current source directory: ' + csd
-print 'Current target directory: ' + ctd
+
+keywords = [ 'accel', 'audio', 'batt', 'cmpss', 'gps' ]
 
 # define working methods
 
@@ -29,66 +30,75 @@ def ExtractFiles(src_folder, tgt_folder):
 			tar = tarfile.open(src_folder + f)
 			tar.extractall(target_folder)
 
-def CleanDir(directory):
-	walker = os.walk(directory)
-	for data in walker:
-		for files in data[2]:
-			try:
-				shutil.move(data[0] + '/' + files, directory)
-			except shutil.Error:
-				continue
+def CleanDir(unzip_dir, csv_dir):
+	walker = os.walk(unzip_dir)
+	for path, dirs, files in walker:
+		for f in files:
+			if os.path.splitext(f)[1] =='.csv':
+				candidate = f.split('_')[2]
+				if not os.path.isdir(csv_dir + candidate):
+					os.makedirs(csv_dir + candidate)
+				shutil.copyfile(path + '/' + f, csv_dir + candidate + '/' + os.path.basename(f))
 
-def Mergy(keyword,tgt_f):
-	files_full = os.listdir(tgt_f)
-	os.chdir(tgt_f)
-	fout=open(keyword + '.csv','a+')	
-	t = 1   # flag	
-	for f in files_full:
-		f_path = tgt_f + f
-		if os.path.splitext(f_path)[0] == keyword:
-			os.remove(f_path)
-		elif os.path.splitext(f_path)[1] == '.csv':
-			print f_path
-			if keyword == f.split('_')[1]:
-				print f_path
-				if t == 1:     # first file:
-					lines = open(f_path,'r')
-					t = 2
+def Merger(candidate, keyword, src_dir, tgt_dir):
+	files_list = os.listdir(src_dir)
+	fout_name = candidate + '_' + keyword + '.csv'
+	fout_fullpath = tgt_dir + fout_name
+	if os.path.isfile(fout_fullpath):
+		os.remove(fout_fullpath)
+	fout = open(fout_fullpath, 'a+')
+	t = 1
+	for path, dirs, files in os.walk(src_dir):
+		for f in files:
+			if os.path.splitext(f)[1] == '.csv' and f.split('_')[1] == keyword:
+				lines = open(path + f, 'r')
+				if t == 1:
 					for line in lines:
 						fout.write(line)
-				else:       # others						
-					lines = open(f_path,'r')
+					t = 2
+				else:
 					lines.next()
 					for line in lines:
 						fout.write(line)
 	fout.close()
-	
-def AverageCalculator(data_file):
-	input_data = open(data_file, 'r')
-	lineTemp = []
-	
 
-# execution
+def Trivial_Fixer(can, can_wrg, keyword, src_dir, tgt_dir):
+	f_org_n = can + '_' + keyword + '.csv'
+	f_app_n = can_wrg + '_' + keyword + '.csv'
+	f_out_nf = tgt_dir + f_org_n
+	f_org = open(src_dir + f_org_n, 'r')
+	f_out = open(f_out_nf, 'a+')
+	for line in f_org:
+		f_out.write(line)
+	f_org.close()
+	f_app = open(src_dir + f_app_n, 'r')
+	f_app.next()
+	for line in f_app:
+		f_out.write(line)
+	f_app.close()
+	f_out.close()
 
-#ExtractFiles(csd,ctd)
-#candidate_list = os.listdir(ctd)
-#for c in candidate_list:
-#	CleanDir(ctd + c)
+# ExtractFiles(tar_dir, unzip_dir)
+# CleanDir(unzip_dir, csv_dir)
 
+# Merge data according to categories
 
+# candidates = os.listdir(csv_dir)
 
+# for c in candidates:
+# 	if os.path.isdir(csv_dir + c):
+# 		for k in keywords:
+# 			Merger(c, k, csv_dir + c + '/', merged_dir)
+# 	else:
+# 		continue
 
-data_folders = os.listdir(ctd)
-data_types = [ 'accel', 'audio', 'batt', 'cmpss', 'gps', 'meta' ]
-for df in data_folders:
-	if df == 'APPLE':
-		tgt_folder = ctd + df + '/'
-		print tgt_folder
-		for dt in data_types:
-			print dt
-			Mergy(dt,tgt_folder)
+# fix problems with some person with different names
 
-# calculate average value
+# cans = [ 'DAISEY', 'LILLY' ]
+# cans_wrg = [ 'DAISY', 'LILY' ]
+# for i in range(2):
+# 	for kw in keywords:
+# 		Trivial_Fixer(cans[i], cans_wrg[i], kw, merged_dir, root_dir)
 
 print 'DONE'
 		
