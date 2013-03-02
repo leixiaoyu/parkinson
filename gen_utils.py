@@ -3,7 +3,6 @@
 # date time comparer
 # input format 2012-01-06 17:14:20
 
-
 def Compare_DateTime(dt1, dt2):
 	# return true if dt2 is later than dt1
 	chs = [ '-', ' ', ':' ]
