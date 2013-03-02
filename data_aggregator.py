@@ -4,11 +4,8 @@ import os
 import numpy
 import gen_utils as gu
 
-<<<<<<< HEAD
 import ConfigParser
 
-print 'DONE'
-=======
 config = ConfigParser.RawConfigParser()
 config.read('localconfig.conf')
 calculated_dir = config.get('Pathes', 'calculated')
@@ -40,7 +37,6 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
                     # calculation 
                     mean_result = mean(minute_table, axis=0)
                     fout.write(mean_result)
-                    
                     benchmark = line.split(',')[-1]
                     minute_table = []
                     minute_table.append(line.split(','))
@@ -49,6 +45,5 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
     
         
 print 'done'
->>>>>>> calculator
 
 
