@@ -42,8 +42,7 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
                     minute_table.append(line.split(','))
             counter += 1
         f.next
-    
-        
+
 print 'done'
 
 
