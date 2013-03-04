@@ -6,7 +6,6 @@ import gen_utils as gu
 
 #<<<<<<< HEAD
 import ConfigParser
-
 print 'DONE'
 
 config = ConfigParser.RawConfigParser()
@@ -29,7 +28,6 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
     flag = 1
     with open(src_file) as f:   #write the title                    
         for i in f:
-            if flag ==1:
                 fout.write(i)
                 flag =2    
     with open(src_file) as f:   #write the mean for each minute             
