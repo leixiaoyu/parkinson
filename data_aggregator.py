@@ -4,10 +4,6 @@ import os
 import numpy
 import gen_utils as gu
 
-#<<<<<<< HEAD
-import ConfigParser
-print 'DONE'
-
 config = ConfigParser.RawConfigParser()
 config.read('localconfig.conf')
 calculated_dir = config.get('Pathes', 'calculated')
@@ -28,8 +24,9 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
     flag = 1
     with open(src_file) as f:   #write the title                    
         for i in f:
+            if flag == 1:
                 fout.write(i)
-                flag =2    
+                flag = 2    
     with open(src_file) as f:   #write the mean for each minute             
         f.next()
         counter = 1
@@ -55,7 +52,7 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
                         for j in range(len(minute_table2[0])):                                
                                 minute_table3[i][j] = float(minute_table2[i][j])                   
                     mean_result = numpy.mean(minute_table3, axis=0)                    
-#                    variance_result = numpy.var(minute_table3, axis=0)
+#                   variance_result = numpy.var(minute_table3, axis=0)
                     for i in mean_result:
                         mean_result2.append(i)
                     mean_result2.append(benchmark)
@@ -70,16 +67,12 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
                     minute_table.append(line.split(','))
             counter += 1
         f.next
-<<<<<<< HEAD
-=======
-    
-        
+
 for c in candidates:
 	for kw in keywords:
 		Stat_Calculator(c, kw, merged_dir, calculated_dir)
->>>>>>> 31031744a8eea049d013e5a0908f84e387e9ded5
 
-print 'done'
-#>>>>>>> calculator
+
+print 'DONE'
 
 
