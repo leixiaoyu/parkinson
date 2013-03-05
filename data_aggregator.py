@@ -19,7 +19,7 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
     src_file = src_dir + candidate + '_' + keyword + '.csv'
     benchmark = ''
     fout_name = candidate + '_' + keyword + '_mean' + '.csv'
-    fout_fullpath = tgt_dir + fout_name    
+    fout_fullpath = tgt_dir + fout_name  
     fout = open(fout_fullpath, 'a+')
     flag = 1
     with open(src_file) as f:   #write the title                    
@@ -31,9 +31,13 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
         f.next()
         counter = 1
         for line in f:
+            temp_line = []
             if counter == 1:
                 benchmark = line.split(',')[-1]
-                minute_table.append(line.split(','))
+                for i in line.split(',')[:-1]:
+                    i = float(i)
+                temp_line.append(i)
+                minute_table.append(temp_line)
             else:
                 ctime = line.split(',')[-1]
                 if gu.Is_Same_Minute(benchmark, ctime):  #identify each minute
@@ -47,7 +51,7 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
                         for j in i[0:-1]:
                             j = float(j)
                         minute_table2.append(i[0:-1])
-                    minute_table3=minute_table2
+                    minute_table3 = minute_table2
                     for i in range(len(minute_table2)):
                         for j in range(len(minute_table2[0])):                                
                                 minute_table3[i][j] = float(minute_table2[i][j])                   
@@ -74,5 +78,3 @@ for c in candidates:
 
 
 print 'DONE'
-
-
