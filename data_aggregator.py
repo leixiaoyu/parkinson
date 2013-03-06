@@ -22,7 +22,6 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
         for line in f:
             if flag == 1:
                 fout.write(line)  # write title in output file
-                flag = 2
             else:  # calculate mean and write to output file
                 temp_line = []
                 ctime = line.split(',')[-1]
@@ -39,6 +38,11 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
                     mean_result.append(benchmark)
                     gu.Write_String_List(mean_result, fout, ',')
                     benchmark = line.split(',')[-1]
+                    minute_table = []
+                    for i in line.split(',')[:-1]:
+                        i = float(i)
+                        temp_line.append(i)
+                    minute_table.append(temp_line)
                 elif gu.Is_Same_Minute(benchmark, ctime):  # identify each minute
                     for i in line.split(',')[:-1]:
                         i = float(i)
@@ -46,9 +50,13 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
                     minute_table.append(temp_line)
                 else:
                     print 'Wrong Branch'
+            print flag
+            flag += 1
 
 for c in candidates:
-	for kw in keywords:
-		Stat_Calculator(c, kw, merged_dir, calculated_dir)
+    print c
+    for kw in keywords:
+        print kw
+        Stat_Calculator(c, kw, merged_dir, calculated_dir)
 
 print 'DONE'
