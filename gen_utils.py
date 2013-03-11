@@ -1,5 +1,6 @@
 # general utilities
 import numpy as np
+from time import strftime
 
 
 def Normalize_DateTime(dt):
@@ -31,6 +32,11 @@ def Is_Same_Minute(dt1, dt2):
         return False
 
 
+def Get_Timestamp():
+    ctime = strftime("%Y-%m-%d-%H-%M-%S")
+    return str(ctime)
+
+
 def Compute_Mean(data_list):
     data = np.array(data_list)
     dout = []
@@ -38,6 +44,20 @@ def Compute_Mean(data_list):
     for c in mean:
         dout.append(c)
     return dout
+
+
+def Compute_Mean_Variance(data_list):
+    dl = data_list
+    s, s2 = 0, 0
+    for e in dl:
+        try:
+            s += float(e)
+            s2 += float(e) * float(e)
+        except:
+            print e
+    mean = s / len(dl)
+    variance = (s2 - (s * s) / len(dl)) / len(dl)
+    return (mean, variance)
 
 
 def Write_String_List(data_list, output_file, delimiter):

@@ -1,14 +1,17 @@
 # data aggregator
 import ConfigParser
 import gen_utils as gu
+import math
 
 config = ConfigParser.RawConfigParser()
 config.read('localconfig.conf')
-calculated_dir = config.get('Pathes', 'calculated')
+calculated_dir = config.get('Pathes', 'calculate')
 merged_dir = config.get('Pathes', 'merged')
+log_dir = config.get('Pathes', 'log')
 test_dir = config.get('Pathes', 'test')
 candidates = config.get('Types', 'candidate').split(',')
 keywords = config.get('Types', 'keyword').split(',')
+
 
 def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
     minute_table = []
@@ -53,10 +56,41 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
             print flag
             flag += 1
 
-for c in candidates:
-    print c
-    for kw in keywords:
-        print kw
-        Stat_Calculator(c, kw, merged_dir, calculated_dir)
+
+def T_Test(can1, can2, keyword, column, src_dir, tgt_dir):
+    can1_path = src_dir + can1 + '_' + keyword + '.csv'
+    can2_path = src_dir + can2 + '_' + keyword + '.csv'
+    fin1 = open(can1_path, 'r')
+    fin2 = open(can2_path, 'r')
+    timestamp = gu.Get_Timestamp().replace('-', '')[4:]
+    fout_path = tgt_dir + can1 + '_' + can2 + '_ttest_' + timestamp + '.log'
+    data1, data2 = [], []
+    counter = 0
+    for line in fin1:
+        if counter < 2:
+            counter += 1
+        else:
+            data1.append(line[column])
+    for line in fin2:
+        if counter < 2:
+            counter += 1
+        else:
+            data2.append(line[column])
+    fout = open(fout_path, 'a+')
+    mean1, var1 = gu.Compute_Mean_Variance(data1)
+    mean2, var2 = gu.Compute_Mean_Variance(data2)
+    n1, n2 = len(data1), len(data2)
+    fout.write(str(mean1) + '\n' + str(var1) + '\n')
+    fout.write(str(mean2) + '\n' + str(var2) + '\n')
+    t = (mean1 - mean2) / math.sqrt(var1 / n1 + var2 / n2)
+    fout.write(str(t) + '\n')
+
+T_Test('LILLY', 'PEONY', 'accel', 3, test_dir, log_dir)
+
+# for c in candidates:
+#     print c
+#     for kw in keywords:
+#         print kw
+#         Stat_Calculator(c, kw, merged_dir, calculated_dir)
 
 print 'DONE'

@@ -77,7 +77,7 @@ def Summerize_Time(candidate, keywords, src_dir, tgt_dir):
 # print candidates
 # print keywords
 
-candidate = 'DAISEY'
+candidate = 'PEONY'
 keyword = 'accel'
 Sample_Calculated_Data(candidate, keyword, calculated_dir, sample_dir, 100)
 
