@@ -62,8 +62,6 @@ def T_Test(can1, can2, keyword, column, src_dir, tgt_dir):
     can2_path = src_dir + can2 + '_' + keyword + '.csv'
     fin1 = open(can1_path, 'r')
     fin2 = open(can2_path, 'r')
-    timestamp = gu.Get_Timestamp().replace('-', '')[4:]
-    fout_path = tgt_dir + can1 + '_' + can2 + '_ttest_' + timestamp + '.log'
     data1, data2 = [], []
     counter = 0
     for line in fin1:
@@ -76,14 +74,11 @@ def T_Test(can1, can2, keyword, column, src_dir, tgt_dir):
             counter += 1
         else:
             data2.append(line[column])
-    fout = open(fout_path, 'a+')
     mean1, var1 = gu.Compute_Mean_Variance(data1)
     mean2, var2 = gu.Compute_Mean_Variance(data2)
     n1, n2 = len(data1), len(data2)
-    fout.write(str(mean1) + '\n' + str(var1) + '\n')
-    fout.write(str(mean2) + '\n' + str(var2) + '\n')
     t = (mean1 - mean2) / math.sqrt(var1 / n1 + var2 / n2)
-    fout.write(str(t) + '\n')
+    return t
 
 
 def ANOVA(candidates, keyword, column, src_dir, tgt_dir):
@@ -106,11 +101,28 @@ def ANOVA(candidates, keyword, column, src_dir, tgt_dir):
         # sampling without replacement
         sample = gu.Sampling_with_Rep(d, sample_size)
         data_matrix.append(sample)
-    # start calculate states for ANOVA
+    # calculate between-group mean square value
     means = gu.Compute_Mean(data_matrix)
+    mean_all = sum(means) / len(means)
+    sum_square_b = 0.
+    for m in means:
+        sum_square_b = sum_square_b + sample_size * (m - mean_all) * (m - mean_all)
+    deg_free_b = len(candidates) - 1
+    mean_square_b = sum_square_b / deg_free_b
+    # calculate within-group mean square value
+    deg_free_w = len(candidates) * (sample_size - 1)
+    sum_square_w = 0.
+    for i in range(len(candidates)):
+        for j in range(sample_size):
+            sum_square_w = sum_square_w + (data_matrix[i][j] - mean_all[i])
+    mean_square_w = sum_square_w / deg_free_w
+    # get F value
+    f = mean_square_b / mean_square_w
+    return f
 
 
-
+# timestamp = gu.Get_Timestamp().replace('-', '')[4:]
+# fout_path = tgt_dir + can1 + '_' + can2 + '_ttest_' + timestamp + '.log'
 # T_Test('LILLY', 'PEONY', 'accel', 3, test_dir, log_dir)
 
 # for c in candidates:
