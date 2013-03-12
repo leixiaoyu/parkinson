@@ -1,5 +1,4 @@
 # data sampler
-
 import ConfigParser
 import gen_utils as gu
 import random
@@ -13,16 +12,9 @@ candidates = config.get('Types', 'candidate').split(',')
 keywords = config.get('Types', 'keyword').split(',')
 
 
-def File_Len(fname):
-    with open(fname) as f:
-        for i, l in enumerate(f):
-            pass
-    return i + 1
-
-
 def Sample_Calculated_Data(candidate, keyword, src_dir, tgt_dir, size):
     src_file = src_dir + candidate + '_' + keyword + '_mean.csv'
-    length = File_Len(src_file)
+    length = gu.File_Len(src_file)
     used_num = [0]
     if size > length:
         size = length - 1
@@ -43,7 +35,7 @@ def Sample_Calculated_Data(candidate, keyword, src_dir, tgt_dir, size):
 
 def Sample_Raw_Data(candidate, keyword, src_dir, tgt_dir, size):
     src_file = src_dir + candidate + '_' + keyword + '.csv'
-    length = File_Len(src_file)
+    length = gu.File_Len(src_file)
     used_num = [0]
     if size > length:
         size = length - 1

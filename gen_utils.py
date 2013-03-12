@@ -1,6 +1,14 @@
 # general utilities
 import numpy as np
+import random
 from time import strftime
+
+
+def File_Len(fname):
+    with open(fname) as f:
+        for i, l in enumerate(f):
+            pass
+    return i + 1
 
 
 def Normalize_DateTime(dt):
@@ -37,8 +45,8 @@ def Get_Timestamp():
     return str(ctime)
 
 
-def Compute_Mean(data_list):
-    data = np.array(data_list)
+def Compute_Mean(data_matrix):
+    data = np.array(data_matrix)
     dout = []
     mean = np.mean(data, axis=0)
     for c in mean:
@@ -58,6 +66,28 @@ def Compute_Mean_Variance(data_list):
     mean = s / len(dl)
     variance = (s2 - (s * s) / len(dl)) / len(dl)
     return (mean, variance)
+
+
+def Sampling_with_Rep(data_list, sample_size):
+    dout = []
+    i = sample_size
+    while i > 0:
+        tag = random.randint(0, i)
+        dout.append(data_list[tag])
+        i -= 1
+    return dout
+
+
+def Sampling_without_Rep(data_list, sample_size):
+    dout, used = [], []
+    i = sample_size
+    while i > 0:
+        tag = random.randint(0, i)
+        while tag in used:
+            tag = random.randint(0, 1)
+        dout.append(data_list[tag])
+        i -= 1
+    return dout
 
 
 def Write_String_List(data_list, output_file, delimiter):

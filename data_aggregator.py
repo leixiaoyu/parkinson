@@ -85,7 +85,33 @@ def T_Test(can1, can2, keyword, column, src_dir, tgt_dir):
     t = (mean1 - mean2) / math.sqrt(var1 / n1 + var2 / n2)
     fout.write(str(t) + '\n')
 
-T_Test('LILLY', 'PEONY', 'accel', 3, test_dir, log_dir)
+
+def ANOVA(candidates, keyword, column, src_dir, tgt_dir):
+    data_i, data_matrix_raw, data_matrix, file_lens = [], [], [], []
+    # read data into lists
+    for c in candidates:
+        with open(src_dir + c + '_' + keyword + '.csv', 'r') as fin:
+            file_lens.append(gu.File_Len(fin))
+            counter = 0
+            for line in fin:
+                if counter == 0:
+                    counter = 1
+                else:
+                    data_i.append(line[column])
+        data_matrix_raw.append(data_i)
+        data_i = []
+    sample_size = min(file_lens) - 1
+    # sample data so every candidate has the same number of instances
+    for d in data_matrix_raw:
+        # sampling without replacement
+        sample = gu.Sampling_with_Rep(d, sample_size)
+        data_matrix.append(sample)
+    # start calculate states for ANOVA
+    means = gu.Compute_Mean(data_matrix)
+
+
+
+# T_Test('LILLY', 'PEONY', 'accel', 3, test_dir, log_dir)
 
 # for c in candidates:
 #     print c
