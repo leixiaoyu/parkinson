@@ -1,8 +1,6 @@
 # data summizer
-
 import ConfigParser
 import os
-from time import strftime
 
 config = ConfigParser.RawConfigParser()
 config.read('localconfig.conf')
@@ -35,11 +33,11 @@ def File_Summary(path, logfile):
 # summarized data files in given path
 # make sure to change theme to match log file contents
 
-ctime = strftime("%Y-%m-%d_%H-%M-%S")
-theme = 'summary'
-log_name = ctime + '_' + theme + '.log'
+# ctime = strftime("%Y-%m-%d_%H-%M-%S")
+# theme = 'summary'
+# log_name = ctime + '_' + theme + '.log'
 
-with open(log_dir + log_name, 'wb') as logfile:
-    File_Summary(calculated_dir, logfile)
+# with open(log_dir + log_name, 'wb') as logfile:
+#     File_Summary(calculated_dir, logfile)
 
-print 'DONE'
+# print 'DONE'

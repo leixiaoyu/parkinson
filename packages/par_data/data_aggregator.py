@@ -57,7 +57,7 @@ def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
             flag += 1
 
 
-def T_Test(can1, can2, keyword, column, src_dir, tgt_dir):
+def T_Test(can1, can2, keyword, column, src_dir):
     can1_path = src_dir + can1 + '_' + keyword + '.csv'
     can2_path = src_dir + can2 + '_' + keyword + '.csv'
     fin1 = open(can1_path, 'r')
@@ -81,18 +81,22 @@ def T_Test(can1, can2, keyword, column, src_dir, tgt_dir):
     return t
 
 
-def ANOVA(candidates, keyword, column, src_dir, tgt_dir):
+def ANOVA(candidates, keyword, column, src_dir):
     data_i, data_matrix_raw, data_matrix, file_lens = [], [], [], []
     # read data into lists
     for c in candidates:
-        with open(src_dir + c + '_' + keyword + '.csv', 'r') as fin:
-            file_lens.append(gu.File_Len(fin))
+        fin_path = src_dir + c + '_' + keyword + '.csv'
+        with open(fin_path, 'r') as fin:
+            file_lens.append(gu.File_Len(fin_path))
             counter = 0
             for line in fin:
                 if counter == 0:
                     counter = 1
                 else:
-                    data_i.append(line[column])
+                    try:
+                        data_i.append(float(line[column]))
+                    except:
+                        print line[column]
         data_matrix_raw.append(data_i)
         data_i = []
     sample_size = min(file_lens) - 1
@@ -114,13 +118,14 @@ def ANOVA(candidates, keyword, column, src_dir, tgt_dir):
     sum_square_w = 0.
     for i in range(len(candidates)):
         for j in range(sample_size):
-            sum_square_w = sum_square_w + (data_matrix[i][j] - mean_all[i])
+            sum_square_w = sum_square_w + (data_matrix[i][j] - means[i])
     mean_square_w = sum_square_w / deg_free_w
-    # get F value
+    # compute F value
     f = mean_square_b / mean_square_w
     return f
 
-
+# f = ANOVA(candidates, 'accel', 3, merged_dir)
+# print f
 # timestamp = gu.Get_Timestamp().replace('-', '')[4:]
 # fout_path = tgt_dir + can1 + '_' + can2 + '_ttest_' + timestamp + '.log'
 # T_Test('LILLY', 'PEONY', 'accel', 3, test_dir, log_dir)
@@ -131,4 +136,4 @@ def ANOVA(candidates, keyword, column, src_dir, tgt_dir):
 #         print kw
 #         Stat_Calculator(c, kw, merged_dir, calculated_dir)
 
-print 'DONE'
+# print 'DONE'
