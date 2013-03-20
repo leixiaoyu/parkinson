@@ -1,7 +1,7 @@
 # main working space
 import ConfigParser
 # from packages import par_data
-from packages.par_file import file_organizer
+from packages.par_file import file_organizer as fo
 # from packages import par_misc
 
 config = ConfigParser.RawConfigParser()
@@ -11,11 +11,15 @@ merged_dir = config.get('Pathes', 'merged')
 log_dir = config.get('Pathes', 'log')
 test_dir = config.get('Pathes', 'test')
 calculated_dir = config.get('Pathes', 'calculate')
+meta_dir = config.get('Pathes', 'meta')
 candidates = config.get('Types', 'candidate').split(',')
+patient = config.get('Types', 'patient').split(',')
 keywords = config.get('Types', 'keyword').split(',')
 
 # put code here #
 
-f = sample_dir + 'LILLY_accel_sample_calculated.csv'
-file_organizer.Convert_MetaFormat(f, test_dir, '1', 10000)
-
+# convert file into meta neural format (change file name if necessary)
+for i in range(len(candidates)):
+    print i
+    f = merged_dir + candidates[i] + '_accel.csv'
+    fo.Convert_MetaFormat(f, test_dir, patient[i], 100000 * (i + 1))
