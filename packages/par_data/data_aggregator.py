@@ -1,16 +1,6 @@
 # data aggregator
-import ConfigParser
 import gen_utils as gu
 import math
-
-config = ConfigParser.RawConfigParser()
-config.read('localconfig.conf')
-calculated_dir = config.get('Pathes', 'calculate')
-merged_dir = config.get('Pathes', 'merged')
-log_dir = config.get('Pathes', 'log')
-test_dir = config.get('Pathes', 'test')
-candidates = config.get('Types', 'candidate').split(',')
-keywords = config.get('Types', 'keyword').split(',')
 
 
 def Stat_Calculator(candidate, keyword, src_dir, tgt_dir):
@@ -123,17 +113,3 @@ def ANOVA(candidates, keyword, column, src_dir):
     # compute F value
     f = mean_square_b / mean_square_w
     return f
-
-# f = ANOVA(candidates, 'accel', 3, merged_dir)
-# print f
-# timestamp = gu.Get_Timestamp().replace('-', '')[4:]
-# fout_path = tgt_dir + can1 + '_' + can2 + '_ttest_' + timestamp + '.log'
-# T_Test('LILLY', 'PEONY', 'accel', 3, test_dir, log_dir)
-
-# for c in candidates:
-#     print c
-#     for kw in keywords:
-#         print kw
-#         Stat_Calculator(c, kw, merged_dir, calculated_dir)
-
-# print 'DONE'

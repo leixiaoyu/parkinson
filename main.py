@@ -1,8 +1,8 @@
 # main working space
 import ConfigParser
-from packages import par_data
-from packages import par_file
-from packages import par_misc
+# from packages import par_data
+from packages.par_file import file_organizer
+# from packages import par_misc
 
 config = ConfigParser.RawConfigParser()
 config.read('localconfig.conf')
@@ -15,3 +15,7 @@ candidates = config.get('Types', 'candidate').split(',')
 keywords = config.get('Types', 'keyword').split(',')
 
 # put code here #
+
+f = sample_dir + 'LILLY_accel_sample_calculated.csv'
+file_organizer.Convert_MetaFormat(f, test_dir, '1', 10000)
+

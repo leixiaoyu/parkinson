@@ -1,22 +1,7 @@
 # data file organizer
-# written in python
-import ConfigParser
 import shutil
 import os
 import tarfile
-
-# define working path and resources
-
-config = ConfigParser.RawConfigParser()
-config.read('localconfig.conf')
-root_dir = config.get('Pathes', 'root')
-tar_dir = config.get('Pathes', 'tar')
-unzip_dir = config.get('Pathes', 'unzip')
-csv_dir = config.get('Pathes', 'csv')
-merged_dir = config.get('Pathes', 'merged')
-keywords = ['accel', 'audio', 'batt', 'cmpss', 'gps']
-
-# define working methods
 
 
 def ExtractFiles(src_folder, tgt_folder):
@@ -80,26 +65,21 @@ def Trivial_Fixer(can, can_wrg, keyword, src_dir, tgt_dir):
     f_app.close()
     f_out.close()
 
-# ExtractFiles(tar_dir, unzip_dir)
-# CleanDir(unzip_dir, csv_dir)
 
-# Merge data according to categories
-
-# candidates = os.listdir(csv_dir)
-
-# for c in candidates:
-#     if os.path.isdir(csv_dir + c):
-#         for k in keywords:
-#             Merger(c, k, csv_dir + c + '/', merged_dir)
-#     else:
-#         continue
-
-# fix problems with some person with different names
-
-# cans = [ 'DAISEY', 'LILLY' ]
-# cans_wrg = [ 'DAISY', 'LILY' ]
-# for i in range(2):
-#     for kw in keywords:
-#         Trivial_Fixer(cans[i], cans_wrg[i], kw, merged_dir, root_dir)
-
-# print 'DONE'
+def Convert_MetaFormat(src_file, tgt_dir, isPatient, startingNum):
+    tgt_file = tgt_dir + os.path.basename(src_file)[:-4] + '_meta.csv'
+    fout = open(tgt_file, 'w')
+    with open(src_file, 'r') as fin:
+        for i, line in enumerate(fin):
+            if i == 0:
+                continue
+            else:
+                data = line.split(',')[1:-1]
+                data.append(isPatient)
+                data.append(str(startingNum + i))
+                output = ''
+                for d in data[:-1]:
+                    output = output + d + ','
+                output = output + data[-1]
+                fout.write(output + '\n')
+    fout.close()
