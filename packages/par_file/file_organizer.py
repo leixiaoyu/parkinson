@@ -83,3 +83,16 @@ def Convert_MetaFormat(src_file, tgt_dir, isPatient, startingNum):
                 output = output + data[-1]
                 fout.write(output + '\n')
     fout.close()
+
+def all_in_one(src_dir, tgt_dir, keyword, people):
+    fout_name = 'total_records' + '_' + keyword + '.csv'
+    fout_fullpath = tgt_dir + fout_name
+#    if os.path.isfile(fout_fullpath):
+#        os.remove(fout_fullpath)
+    fout = open(fout_fullpath, 'a+')
+    for candidate in people:        
+        f_together = src_dir + candidate + '_' + keyword + '_meta.csv'
+        with open(f_together, 'r') as fin:
+            for line in fin:
+                fout.write(line + '\n')
+     

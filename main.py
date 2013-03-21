@@ -19,7 +19,12 @@ keywords = config.get('Types', 'keyword').split(',')
 # put code here #
 
 # convert file into meta neural format (change file name if necessary)
-for i in range(len(candidates)):
-    print i
-    f = merged_dir + candidates[i] + '_accel.csv'
-    fo.Convert_MetaFormat(f, test_dir, patient[i], 100000 * (i + 1))
+#for i in range(len(candidates)):
+#    print i
+#    f = merged_dir + candidates[i] + '_accel.csv'
+#    
+#    fo.Convert_MetaFormat(f, meta_dir, patient[i], 10000000 * (i + 1))
+    
+# add up all the data of different keywords
+people = candidates
+fo.all_in_one(meta_dir, meta_dir, 'accel', people)
