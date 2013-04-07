@@ -2,6 +2,7 @@
 import ConfigParser
 # from packages import par_data
 from packages.par_file import file_organizer as fo
+# from packages.par_file import file_summerizer as fs
 # from packages import par_misc
 
 config = ConfigParser.RawConfigParser()
@@ -22,4 +23,6 @@ keywords = config.get('Types', 'keyword').split(',')
 for i in range(len(candidates)):
     print i
     f = merged_dir + candidates[i] + '_accel.csv'
-    fo.Convert_MetaFormat(f, test_dir, patient[i], 100000 * (i + 1))
+    fo.Convert_MetaFormat(f, meta_dir, patient[i], 100000 * (i + 1))
+
+# fs.File_Summary(test_dir, log_dir)

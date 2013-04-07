@@ -1,5 +1,4 @@
 #data sampler
-import gen_utils as gu
 import os
 import random
 
@@ -77,3 +76,5 @@ def Take_Rows(src_file, tgt_dir, number_of_row):
             else:
                 fout.write(line)
     fout.close
+
+

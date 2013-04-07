@@ -67,6 +67,7 @@ def Trivial_Fixer(can, can_wrg, keyword, src_dir, tgt_dir):
 
 
 def Convert_MetaFormat(src_file, tgt_dir, isPatient, startingNum):
+    """convert original file into semi-meta format delimetered by comma"""
     tgt_file = tgt_dir + os.path.basename(src_file)[:-4] + '_meta.csv'
     fout = open(tgt_file, 'w')
     with open(src_file, 'r') as fin:
@@ -82,4 +83,14 @@ def Convert_MetaFormat(src_file, tgt_dir, isPatient, startingNum):
                     output = output + d + ','
                 output = output + data[-1]
                 fout.write(output + '\n')
+    fout.close()
+
+
+def Csv_to_Meta(src_file, tgt_dir):
+    """convert semi-meta format into meta format, separated by tabs"""
+    tgt_file = tgt_dir + os.path.basename(src_file)[:-4] + '.meta'
+    fout = open(tgt_file, 'w')
+    with open(src_file, 'r') as fin:
+        for line in fin:
+            fout.write(line.replace(',', '\t'))
     fout.close()
