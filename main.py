@@ -1,8 +1,8 @@
 # main working space
 import ConfigParser
 # from packages import par_data
-# from packages.par_file import file_organizer as fo
-from packages.par_file import file_summerizer as fs
+from packages.par_file import file_organizer as fo
+# from packages.par_file import file_summerizer as fs
 # from packages import par_misc
 
 config = ConfigParser.RawConfigParser()
@@ -28,4 +28,6 @@ keywords = config.get('Types', 'keyword').split(',')
 # summarize files in MetaNeural format into log file in log dir
 # fs.File_Summary(meta_dir, log_dir, '')
 
-
+# add up all the data of different keywords
+people = candidates
+fo.all_in_one(meta_dir, meta_dir, 'accel', people)
