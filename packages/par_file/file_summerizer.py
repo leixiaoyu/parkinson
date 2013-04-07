@@ -15,10 +15,10 @@ def Get_Timestamp():
     return str(ctime).replace('-', '')
 
 
-def File_Summary(src_dir='', log_dir='', log_name=''):
+def File_Summary(src_dir, log_dir, log_name):
     """summize file property into a log file"""
     files = os.listdir(src_dir)
-    log_name = log_name + Get_Timestamp() + '.log'
+    log_name = log_dir + log_name + Get_Timestamp() + '.log'
     with open(log_name, 'w') as logfile:
         logfile.write('counter | file name | size | attributes | instances\n')
         counter = 1

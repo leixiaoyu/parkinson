@@ -1,8 +1,8 @@
 # main working space
 import ConfigParser
 # from packages import par_data
-from packages.par_file import file_organizer as fo
-# from packages.par_file import file_summerizer as fs
+# from packages.par_file import file_organizer as fo
+from packages.par_file import file_summerizer as fs
 # from packages import par_misc
 
 config = ConfigParser.RawConfigParser()
@@ -20,9 +20,12 @@ keywords = config.get('Types', 'keyword').split(',')
 # put code here #
 
 # convert file into meta neural format (change file name if necessary)
-for i in range(len(candidates)):
-    print i
-    f = merged_dir + candidates[i] + '_accel.csv'
-    fo.Convert_MetaFormat(f, meta_dir, patient[i], 100000 * (i + 1))
+# for i in range(len(candidates)):
+#     print i
+#     f = merged_dir + candidates[i] + '_accel.csv'
+#     fo.Convert_MetaFormat(f, meta_dir, patient[i], 100000 * (i + 1))
 
-# fs.File_Summary(test_dir, log_dir)
+# summarize files in MetaNeural format into log file in log dir
+# fs.File_Summary(meta_dir, log_dir, '')
+
+
