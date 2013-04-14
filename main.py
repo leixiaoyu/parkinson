@@ -1,7 +1,8 @@
 # main working space
 import ConfigParser
-# from packages import par_data
-from packages.par_file import file_organizer as fo
+from packages.par_data import data_sampler as ds
+# from packages.par_file import file_organizer as fo
+# from packages.par_file import file_summerizer as fs
 # from packages import par_misc
 
 config = ConfigParser.RawConfigParser()
@@ -19,12 +20,28 @@ keywords = config.get('Types', 'keyword').split(',')
 # put code here #
 
 # convert file into meta neural format (change file name if necessary)
-#for i in range(len(candidates)):
-#    print i
-#    f = merged_dir + candidates[i] + '_accel.csv'
-#    
-#    fo.Convert_MetaFormat(f, meta_dir, patient[i], 10000000 * (i + 1))
-    
+# for i in range(len(candidates)):
+#     print i
+#     f = merged_dir + candidates[i] + '_accel.csv'
+#     fo.Convert_MetaFormat(f, meta_dir, patient[i], 100000 * (i + 1))
+
+# summarize files in MetaNeural format into log file in log dir
+# fs.File_Summary(meta_dir, log_dir, '')
+
 # add up all the data of different keywords
-people = candidates
-fo.all_in_one(meta_dir, meta_dir, 'accel', people)
+# people = candidates
+# fo.All_In_One(sample_dir, sample_dir, 'accel', people)
+
+# sampling data into sample dir
+# for i in range(len(candidates)):
+#     print i
+#     f = meta_dir + candidates[i] + '_accel_meta.csv'
+#     ds.Sampling_without_Rep(f, sample_dir, 1000)
+
+# convert CSV file into Meta file
+# f = meta_dir + 'total_records_accel.csv'
+# fo.Csv_to_Meta(f, sample_dir)
+
+# sampling data file in meta format
+# f = sample_dir + 'total_records_accel.csv'
+# ds.Sampling_without_Rep(f, sample_dir, 1000)

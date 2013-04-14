@@ -67,6 +67,7 @@ def Trivial_Fixer(can, can_wrg, keyword, src_dir, tgt_dir):
 
 
 def Convert_MetaFormat(src_file, tgt_dir, isPatient, startingNum):
+    """convert original file into semi-meta format delimetered by comma"""
     tgt_file = tgt_dir + os.path.basename(src_file)[:-4] + '_meta.csv'
     fout = open(tgt_file, 'w')
     with open(src_file, 'r') as fin:
@@ -84,15 +85,23 @@ def Convert_MetaFormat(src_file, tgt_dir, isPatient, startingNum):
                 fout.write(output + '\n')
     fout.close()
 
-def all_in_one(src_dir, tgt_dir, keyword, people):
+
+def Csv_to_Meta(src_file, tgt_dir):
+    """convert semi-meta format into meta format, separated by tabs"""
+    tgt_file = tgt_dir + os.path.basename(src_file)[:-4] + '.meta'
+    fout = open(tgt_file, 'w')
+    with open(src_file, 'r') as fin:
+        for line in fin:
+            fout.write(line.replace(',', '\t'))
+    fout.close()
+
+
+def All_In_One(src_dir, tgt_dir, keyword, people):
     fout_name = 'total_records' + '_' + keyword + '.csv'
     fout_fullpath = tgt_dir + fout_name
-#    if os.path.isfile(fout_fullpath):
-#        os.remove(fout_fullpath)
-    fout = open(fout_fullpath, 'a+')
-    for candidate in people:        
-        f_together = src_dir + candidate + '_' + keyword + '_meta.csv'
+    fout = open(fout_fullpath, 'w')
+    for candidate in people:
+        f_together = src_dir + candidate + '_' + keyword + '_meta_sample.csv'
         with open(f_together, 'r') as fin:
             for line in fin:
                 fout.write(line)
-     
