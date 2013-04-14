@@ -94,5 +94,5 @@ def all_in_one(src_dir, tgt_dir, keyword, people):
         f_together = src_dir + candidate + '_' + keyword + '_meta.csv'
         with open(f_together, 'r') as fin:
             for line in fin:
-                fout.write(line + '\n')
+                fout.write(line)
      
