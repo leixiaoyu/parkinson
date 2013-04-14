@@ -96,14 +96,14 @@ def Csv_to_Meta(src_file, tgt_dir):
     fout.close()
 
 
-def all_in_one(src_dir, tgt_dir, keyword, people):
+def All_In_One(src_dir, tgt_dir, keyword, people):
     fout_name = 'total_records' + '_' + keyword + '.csv'
     fout_fullpath = tgt_dir + fout_name
 #    if os.path.isfile(fout_fullpath):
 #        os.remove(fout_fullpath)
-    fout = open(fout_fullpath, 'a+')
+    fout = open(fout_fullpath, 'w')
     for candidate in people:
-        f_together = src_dir + candidate + '_' + keyword + '_meta.csv'
+        f_together = src_dir + candidate + '_' + keyword + '_meta_sample.csv'
         with open(f_together, 'r') as fin:
             for line in fin:
                 fout.write(line + '\n')
