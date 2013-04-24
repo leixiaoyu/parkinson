@@ -1,9 +1,9 @@
 # main working space
 import ConfigParser
 from packages.par_data import data_sampler as ds
-# from packages.par_file import file_organizer as fo
-# from packages.par_file import file_summerizer as fs
-# from packages import par_misc
+from packages.par_file import file_organizer as fo
+from packages.par_file import file_summerizer as fs
+from packages import par_misc
 
 config = ConfigParser.RawConfigParser()
 config.read('localconfig.conf')
@@ -32,8 +32,8 @@ keywords = config.get('Types', 'keyword').split(',')
 # fs.File_Summary(meta_dir, log_dir, '')
 
 # add up all the data of different keywords
-# people = candidates
-# fo.All_In_One(sample_dir, sample_dir, 'accel', people)
+people = candidates
+fo.All_In_One(meta_dir, meta_dir, 'accel', people)
 
 # sampling data into sample dir
 # for i in range(len(candidates)):
