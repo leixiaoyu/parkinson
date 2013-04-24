@@ -72,25 +72,24 @@ def Sampling_w_Rep(src_file, tgt_dir, size):
 
 def Sampling_without_Rep(src_file, tgt_dir, size):
     """sampling data in source file without replacement and save into target file"""
-    length = File_Len(src_file)
-    if size > length:
-        size = length - 1
-    tags, used = [], []
+    l = File_Len(src_file)
+    print l
     i = size
-    while i > 0:
-        tag = random.randint(0, i)
-        while tag in used:
-            tag = random.randint(0, i)
-        tags.append(tag)
-        i -= 1
-    fout_path = tgt_dir + os.path.basename(src_file)[:-4] + '_sample.csv'
+    tags = random.sample(range(l), i)
+    print 'generated'
+    tags = sorted(tags)
+    print 'sorted'
+    print len(tags)
+    fout_path = tgt_dir + os.path.basename(src_file)[:-4] + '_sample.sam'
     fout = open(fout_path, 'w')
     with open(src_file, 'r') as fin:
         for i, line in enumerate(fin):
-            if i in tags:
-                fout.write(line)
+            if len(tags) > 0:
+                if i == tags[0]:
+                    fout.write(line)
+                    tags.pop(0)
     fout.close()
-    tags, used = [], []
+    tags = []
 
 
 def Summerize_Time(candidate, keywords, src_dir, tgt_dir):
@@ -108,12 +107,15 @@ def Summerize_Time(candidate, keywords, src_dir, tgt_dir):
 def Take_Rows(src_file, tgt_dir, number_of_row):
     n = number_of_row
     ctime = Get_Timestamp().replace('-', '')
-    fout = open(tgt_dir + os.path.splitext(src_file)[0] + '_sample' + ctime + '.csv', 'a+')
+    fout_path = tgt_dir + os.path.basename(src_file)[:-4] + '_sample' + ctime + '.csv'
+    fout = open(fout_path, 'w')
     with open(src_file, 'r') as fin:
         counter = 0
         for line in fin:
+            print counter
             if counter > n:
                 break
             else:
                 fout.write(line)
-    fout.close
+            counter = counter + 1
+    fout.close()

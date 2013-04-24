@@ -103,7 +103,8 @@ def All_In_One(src_dir, tgt_dir, keyword, people):
 #        os.remove(fout_fullpath)
     fout = open(fout_fullpath, 'w')
     for candidate in people:
-        f_together = src_dir + candidate + '_' + keyword + '_meta_sample.csv'
+        f_together = src_dir + candidate + '_' + keyword + '_meta.meta'
         with open(f_together, 'r') as fin:
             for line in fin:
-                fout.write(line + '\n')
+                fout.write(line)
+    fout.close()

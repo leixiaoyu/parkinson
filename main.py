@@ -19,6 +19,9 @@ keywords = config.get('Types', 'keyword').split(',')
 
 # put code here #
 
+# merge meta format data into one file
+# fo.All_In_One(meta_dir, sample_dir, 'accel', candidates)
+
 # convert file into meta neural format (change file name if necessary)
 # for i in range(len(candidates)):
 #     print i
@@ -39,9 +42,18 @@ keywords = config.get('Types', 'keyword').split(',')
 #     ds.Sampling_without_Rep(f, sample_dir, 1000)
 
 # convert CSV file into Meta file
-# f = meta_dir + 'total_records_accel.csv'
-# fo.Csv_to_Meta(f, sample_dir)
+# for i in range(len(candidates)):
+#     print i
+#     f = meta_dir + candidates[i] + '_accel_meta.csv'
+#     fo.Csv_to_Meta(f, meta_dir)
 
 # sampling data file in meta format
 # f = sample_dir + 'total_records_accel.csv'
-# ds.Sampling_without_Rep(f, sample_dir, 1000)
+# ds.Sampling_without_Rep(f, sample_dir, 1000000)
+
+# take first 1,000,000 row
+# f = sample_dir + 'total_records_accel.csv'
+# ds.Take_Rows(f, sample_dir, 6000000)
+
+f = sample_dir + 'total_records_accel_sample_6m.csv'
+ds.Take_Rows(f, sample_dir, 100)
